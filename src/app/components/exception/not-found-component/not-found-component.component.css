@@ -1,0 +1,6 @@
+h1{font-size: 50px;font-weight: 600;display: block; text-align: center;display: flex; /* Use flex display */
+    align-items: center;
+    flex-direction: column; /* Vertically center align */
+    justify-content: center; /* Horizontally center align */
+    height: 100vh; /* Optionally, for full-height vertical centering */}
+span{color:rgb(255, 0, 0)}

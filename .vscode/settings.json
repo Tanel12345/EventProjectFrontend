@@ -1,4 +1,9 @@
 {
     "editor.fontSize": 14,
-    "window.zoomLevel": 0.1
+    "window.zoomLevel": -0.5,
+    "editor.tabSize": 3,
+    "workbench.editor.tabSizing": "fit",
+    "workbench.editor.tabSizingFixedMaxWidth": 160,
+    "workbench.editor.tabSizingFixedMinWidth": 50,
+    "workbench.editor.wrapTabs": true
 }

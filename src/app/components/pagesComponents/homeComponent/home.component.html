@@ -1,1 +1,39 @@
-<p>home works!</p>
+
+
+
+
+<div class="d-grid gap-2 btn-lg mt-5">
+  <button (click)="addNewEvent()" class="btn btn-primary " type="button">Lisa uus üritus</button>
+  
+</div>
+
+<table class="table fs-5 mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Jk</th>
+        <th scope="col">Ürituse nimi</th>
+        <th scope="col">Millal toimub</th>
+        <th scope="col">Asukoht</th>
+        <th scope="col">Osavõtjate arv</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let event of allEvents; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td (click)="moveToAttendeesView(event.id)"> <span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{ event.name }}</span></td>
+        <td>{{  event.time | date: 'dd.MM.yyyy Kell:HH:mm'  }}</td>
+        <td *ngIf="event.locationAddress" style="font-size: 16px;">
+          <span style="font-weight: bold;">Tänav:</span> {{ event.locationAddress.street ? event.locationAddress.street : 'Info ei ole saadaval' }}<br>
+          <span style="font-weight: bold;">Linn:</span> {{ event.locationAddress.city ? event.locationAddress.city : 'Info ei ole saadaval' }}<br>
+          <span style="font-weight: bold;">Maakond:</span> {{ event.locationAddress.state ? event.locationAddress.state : 'Info ei ole saadaval' }}<br>
+          <span style="font-weight: bold;">Zip number:</span> {{ event.locationAddress.zipCode ? event.locationAddress.zipCode : 'Info ei ole saadaval' }}<br>
+        </td>
+        <td *ngIf="!event.locationAddress">Info ei ole saadaval</td>
+        <td>{{ event.attendeesCount }}</td>
+        </tr>
+        
+        <tr *ngIf=errorMessage class="fw-semibold">
+        <td colspan="6" class="text-danger text-center">{{errorMessage}}</td>
+      </tr>
+    </tbody>
+  </table>

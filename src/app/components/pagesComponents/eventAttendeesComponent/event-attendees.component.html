@@ -1,1 +1,73 @@
-<p>event-attendees works!</p>
+
+
+<div style="margin-top: 30px" *ngIf="eventDetails">
+  <div class="d-grid gap-2 btn-lg mt-5 mb-5">
+    <button routerLink="/" class="btn btn-primary " type="button">Tagasi avalehele</button>
+    
+  </div>
+    <h2 style="text-align: center;"><span style="font-weight: lighter;">Üritus:</span> {{ eventDetails.name }}</h2><hr>
+    <h3 style="text-align: center;" ><span style="font-weight: lighter;">Toimub:</span> {{ eventDetails.time | date: 'dd.MM.yyyy Kell:HH:mm' }}</h3>
+    <div style="text-align: center;">
+        <h3 style="font-weight: lighter; display: inline-block; margin: 10px;">Asukohaga:</h3>
+        <div *ngIf="eventDetails.locationAddress" style="display: flex; flex-wrap: wrap; justify-content: center;">
+          <h5 style="display: inline-block; margin: 0;"><span style="font-weight: lighter;">Tänav:</span> {{ eventDetails.locationAddress.street ? eventDetails.locationAddress.street : 'Info ei ole saadaval' }}</h5>
+          <h5 style="display: inline-block; margin: 0;">&nbsp;,&nbsp;</h5>
+          <h5 style="display: inline-block; margin: 0;"><span style="font-weight: lighter;">Linn:</span> {{ eventDetails.locationAddress.city ? eventDetails.locationAddress.city : 'Info ei ole saadaval' }}</h5>
+          <h5 style="display: inline-block; margin: 0;">&nbsp;,&nbsp;</h5>
+          <h5 style="display: inline-block; margin: 0;"><span style="font-weight: lighter;">Maakond:</span> {{ eventDetails.locationAddress.state ? eventDetails.locationAddress.state : 'Info ei ole saadaval' }}</h5>
+          <h5 style="display: inline-block; margin: 0;">&nbsp;,&nbsp;</h5>
+          <h5 style="display: inline-block; margin: 0;"><span style="font-weight: lighter;">Zip number:</span> {{ eventDetails.locationAddress.zipCode ? eventDetails.locationAddress.zipCode : 'Info ei ole saadaval' }}</h5>
+          
+        </div>
+        <div  *ngIf="!eventDetails.locationAddress"><h5 style="color:red; text-align: center;">Asukoha info ei ole kahjuks sisestatud</h5></div><hr>
+      </div>
+    
+  
+    <h2 style="text-align: center; margin-top:50px">Eraisikust osavõtjad</h2>
+    <div  *ngIf="eventDetails.individualAttendees.length === 0"><h5 style="color:red; text-align: center;">Eraisikust osavõtjad hetkel puuduvad</h5></div>
+  <table class="table fs-5 mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Jk</th>
+        <th scope="col">Eesnimi</th>
+        <th scope="col">Perenimi</th>
+        <th scope="col">Isikukood</th>
+       
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let individual of eventDetails.individualAttendees; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{individual.firstName }}</span></td>
+        <td>{{ individual.lastName }}</td>
+        <td>{{ individual.personalCode }}</td>
+        <td> <button (click)="deleteIndividualAttendee(individual.id)" class="btn btn-primary btn-sm " type="button">Kustuta osaleja</button></td>
+        
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="text-align: center; margin-top:50px">Ettevõttetest osavõtjad</h3>
+  <div  *ngIf="eventDetails.legalAttendees.length === 0"><h5 style="color:red; text-align: center;">Ettevõttest osavõtjad hetkel puuduvad</h5></div>
+  <table class="table fs-5 mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Jk</th>
+        <th scope="col">Ettevõtte nimi</th>
+        <th scope="col">Registrikood</th>
+       
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let legal of eventDetails.legalAttendees; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{ legal.companyName }}</span></td>
+        <td>{{ legal.registrationCode }}</td>
+        <td> <button (click)="deleteLegalAttendee(legal.id)" class="btn btn-primary btn-sm " type="button">Kustuta osaleja</button></td>
+       
+      </tr>
+    </tbody>
+  </table>
+  
+    <div *ngIf="errorMessage" class="fw-semibold text-danger text-center">{{ errorMessage }}</div>
+  </div>
