@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/sharedComponents/header/header.com
 import { FooterComponent } from './components/sharedComponents/footer/footer.component';
 import { HomeComponent } from './components/pagesComponents/homeComponent/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

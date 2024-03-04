@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -25,9 +25,23 @@ export class EventService {
     return this.http.delete<ApiResponse>(url)
   }
 
+  addIndividualAttendee(url:string, attendee: object): Observable<IndividualAttendees> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+      // Lisa headerid kui on soovi
+    });
+  
+    return this.http.post<IndividualAttendees>(url, attendee, { headers });
+  }
 
 
-
+  addLegalAttendee(url:string, attendee: object): Observable<LegalAttendees> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+      // Lisa headerid kui on soovi
+    });
+    return this.http.post<LegalAttendees>(url, attendee, { headers });
+  }
 }
 
 export interface ApiResponse{

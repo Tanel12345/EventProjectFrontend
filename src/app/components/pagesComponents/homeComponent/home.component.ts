@@ -10,6 +10,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
 })
 
 export class HomeComponent {
+
   
   headerInfo: any = {pageName: "AVALEHT",
   additionalInfo: "Kõik registreeritud üritused"}
@@ -48,12 +49,24 @@ export class HomeComponent {
     }
 
 
-  moveToAttendeesView(eventId: number) {
+  navigateToAttendeesView(eventId: number) {
 
-    
     console.log(eventId)
     this.router.navigate(['/eventAttendees'], { queryParams: { eventId: eventId } });
   
+  }
+
+
+  deleteEvent() {
+    throw new Error('Method not implemented.');
+    }
+
+
+  navigateToAddAttendee(eventId: number) {
+
+
+    console.log(eventId)
+    this.router.navigate(['/addAttendee'], { queryParams: { eventId: eventId } });
   }
 
 }
