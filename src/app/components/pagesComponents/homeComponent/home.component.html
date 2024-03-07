@@ -22,6 +22,7 @@
         <th scope="row">{{ i + 1 }}</th>
         <td (click)="navigateToAttendeesView(event.id)"> <span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{ event.name }}</span></td>
         <td>{{  event.time | date: 'dd.MM.yyyy Kell:HH:mm'  }}</td>
+        
         <td *ngIf="event.locationAddress" style="font-size: 16px;">
           <span style="font-weight: bold;">Tänav:</span> {{ event.locationAddress.street ? event.locationAddress.street : 'Info ei ole saadaval' }}<br>
           <span style="font-weight: bold;">Linn:</span> {{ event.locationAddress.city ? event.locationAddress.city : 'Info ei ole saadaval' }}<br>
@@ -31,11 +32,11 @@
         <td *ngIf="!event.locationAddress">Info ei ole saadaval</td>
         <td>{{ event.attendeesCount }}</td>
         <td> 
-          <div class="col">
+          <div *ngIf="currentDate && event.time >= currentDate"class="col">
             <button style="float: right"  (click)="navigateToAddAttendee(event.id)" class="btn btn-primary btn-sm m-1 nupp" type="button">Lisa osaleja</button>
           </div>
           <div class="col">
-            <button style="float: right" (click)="deleteEvent()" class="btn btn-primary btn-sm m-1" type="button">Kustuta üritus</button>
+            <button style="float: right" (click)="deleteEvent(event.id)" class="btn btn-primary btn-sm m-1" type="button">Kustuta üritus</button>
           </div>
         </td>
       

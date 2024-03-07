@@ -34,7 +34,7 @@
     <tbody class="table-group-divider">
       <tr *ngFor="let individual of eventDetails.individualAttendees; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{individual.firstName }}</span></td>
+        <td (click)="navigateToUpdateAttendeeViewIndividual(individual.id  )"><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{individual.firstName }}</span></td>
         <td>{{ individual.lastName }}</td>
         <td>{{ individual.personalCode }}</td>
         <td> <button style="float: right" (click)="deleteIndividualAttendee(individual.id)" class="btn btn-primary btn-sm " type="button">Kustuta osaleja</button></td>
@@ -55,7 +55,7 @@
     <tbody class="table-group-divider">
       <tr *ngFor="let legal of eventDetails.legalAttendees; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{ legal.companyName }}</span></td>
+        <td (click)="navigateToUpdateAttendeeViewLegal(legal.id)"><span class="nimi" style="cursor: pointer;" title="Liigu Osalejate vaatesse">{{ legal.companyName }}</span></td>
         <td>{{ legal.registrationCode }}</td>
         <td> <button style="float: right" (click)="deleteLegalAttendee(legal.id)" class="btn btn-primary btn-sm " type="button">Kustuta osaleja</button></td>
       </tr>

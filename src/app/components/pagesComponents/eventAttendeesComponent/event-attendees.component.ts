@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
 export class EventAttendeesComponent {
 
 
+
   headerInfo: any = {pageName: "Osavõtjate vaade",
   additionalInfo: "Nii eraisikutest kui ettevõttetest osavõtjad"}
   
@@ -31,7 +32,7 @@ export class EventAttendeesComponent {
       this.eventId = +params['eventId'] || 0; // Use '+' to convert to a number
       console.log("evendi id "+this.eventId);
     });
-
+   
     if (this.eventId) {
       this.getEventDetails();
 
@@ -78,9 +79,6 @@ export class EventAttendeesComponent {
    });
   } 
 
-  
-  
-  
     //Tirib ürituse detailid koos osalejatega
     getEventDetails() {
 
@@ -97,4 +95,15 @@ export class EventAttendeesComponent {
     });
 
   }
+
+
+    navigateToUpdateAttendeeViewIndividual(individual: number) {
+
+    this.router.navigate(['/updateAttendee'], { queryParams: { individual: individual, eventId: this.eventId  }});
+    }
+    navigateToUpdateAttendeeViewLegal(legal: number ) {
+
+      this.router.navigate(['/updateAttendee'], { queryParams: { legal: legal, eventId: this.eventId  } });
+    }
+    
 }

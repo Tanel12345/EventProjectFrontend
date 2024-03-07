@@ -1,1 +1,106 @@
-<p>update-attendee works!</p>
+
+
+<div *ngIf="individualAttendeeDetails">
+  <form [formGroup]="individualForm" (ngSubmit)="updateIndividual()">
+    <div class="form-group">
+      <label for="firstName">Eesnimi:</label>
+      <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+      <div *ngIf="individualForm.get('firstName')?.hasError('required') && individualForm.get('firstName')?.touched">
+        <small class="text-danger">Eesnimi on kohustuslik väli</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Perekonnanimi:</label>
+      <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+      <div *ngIf="individualForm.get('lastName')?.hasError('required') && individualForm.get('lastName')?.touched">
+        <small class="text-danger">Perekonnanimi on kohustuslik väli</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="personalCode">Isikukood:</label>
+      <input type="text" id="personalCode" formControlName="personalCode" class="form-control" />
+      <div *ngIf="individualForm.get('personalCode')?.hasError('required') && individualForm.get('personalCode')?.touched">
+        <small class="text-danger">Isikukood on kohustuslik väli</small>
+      </div>
+      <div *ngIf="individualForm.get('personalCode')?.hasError('pattern') && individualForm.get('personalCode')?.touched">
+        <small class="text-danger">Isikukood peab olema number ja 11-kohaline</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+     <label for="paymentMethod">Osavõtumaksu maksmise viis:</label>
+     <div class="form-check">
+       <input type="radio" id="cashCheckbox" formControlName="paymentMethod" value="CASH" class="form-check-input" />
+       <label for="cashCheckbox" class="form-check-label">Sularaha</label>
+     </div>
+     <div class="form-check">
+       <input type="radio" id="bankTransferCheckbox" formControlName="paymentMethod" value="BANKTRANSFER" class="form-check-input" />
+       <label for="bankTransferCheckbox" class="form-check-label">Pangaülekanne</label>
+     </div>
+     <div *ngIf="individualForm.get('paymentMethod')?.hasError('required') && individualForm.get('paymentMethod')?.touched">
+       <small class="text-danger">Vali üks makseviis</small>
+     </div>
+   </div>
+    <div class="form-group">
+      <label for="additionalInfo">Lisainfo:</label>
+      <textarea id="additionalInfo" formControlName="additionalInfo" class="form-control"></textarea>
+      <div *ngIf="individualForm.get('additionalInfo')?.hasError('maxLength') && individualForm.get('additionalInfo')?.touched">
+        <small class="text-danger">Lisainfo ei tohi ületada 1500 tähemärki</small>
+      </div>
+      <div *ngIf="errorMessage">
+        <small class="text-danger fs-4">{{errorMessage}}</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4">Uuenda osavõtja andmed</button>
+  </form>
+</div>
+
+<div *ngIf="legalAttendeeDetails">
+ <form [formGroup]="legalForm" (ngSubmit)="updateLegal()">
+   <div class="form-group">
+     <label for="companyName">Ettevõtte juriidiline nimi:</label>
+     <input type="text" id="companyName" formControlName="companyName" class="form-control" />
+     <div *ngIf="legalForm.get('companyName')?.hasError('required') && legalForm.get('companyName')?.touched">
+       <small class="text-danger">Ettevõtte juriidiline nimi on kohustuslik väli</small>
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="registryCode">Ettevõtte registrikood:</label>
+     <input type="text" id="registryCode" formControlName="registryCode" class="form-control" />
+     <div *ngIf="(legalForm.get('registryCode')?.hasError('required') || legalForm.get('registryCode')?.hasError('pattern')) && legalForm.get('registryCode')?.touched">
+       <small class="text-danger">Ettevõtte registrikood on kohustuslik väli ja peab olema number</small>
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="numberOfParticipants">Ettevõttest tulevate osavõtjate arv:</label>
+     <input type="text" id="numberOfParticipants" formControlName="numberOfParticipants" class="form-control" />
+     <div *ngIf="(legalForm.get('numberOfParticipants')?.hasError('required') || legalForm.get('numberOfParticipants')?.hasError('pattern') || legalForm.get('numberOfParticipants')?.hasError('max')) && legalForm.get('numberOfParticipants')?.touched">
+       <small class="text-danger">Ettevõttest tulevate osavõtjate arv on kohustuslik väli ja peab olema number ning ei tohi ületada 25 osalejat</small>
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="paymentMethod">Osavõtumaksu maksmise viis:</label>
+     <div class="form-check">
+       <input type="radio" id="cashCheckbox" formControlName="paymentMethod" value="CASH" class="form-check-input" />
+       <label for="cashCheckbox" class="form-check-label">Sularaha</label>
+     </div>
+     <div class="form-check">
+       <input type="radio" id="bankTransferCheckbox" formControlName="paymentMethod" value="BANKTRANSFER" class="form-check-input" />
+       <label for="bankTransferCheckbox" class="form-check-label">Pangaülekanne</label>
+     </div>
+     <div *ngIf="legalForm.get('paymentMethod')?.hasError('required') && legalForm.get('paymentMethod')?.touched">
+       <small class="text-danger">Vali üks makseviis</small>
+     </div>
+   </div>
+   <div class="form-group">
+     <label for="additionalInfo">Lisainfo:</label>
+     <textarea id="additionalInfo" formControlName="additionalInfo" class="form-control"></textarea>
+     <div *ngIf="legalForm.get('additionalInfo')?.hasError('maxLength') && legalForm.get('additionalInfo')?.touched">
+       <small class="text-danger">Lisainfo ei tohi ületada 1500 tähemärki</small>
+     </div>
+     <div *ngIf="errorMessage">
+      <small class="text-danger">{{errorMessage}}</small>
+    </div>
+   </div>
+   <button type="submit" class="btn btn-primary mt-4">Uuenda osavõtja andmed</button>
+ </form>

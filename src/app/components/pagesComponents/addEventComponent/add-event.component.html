@@ -1,1 +1,74 @@
-<p>add-event works!</p>
+
+
+
+<form  [formGroup]="eventForm" (ngSubmit)="saveNewEvent()">
+   <div class="form-group">
+     <h5 >Ürituse nimi:</h5>
+     
+     <input type="text" id="name" formControlName="name" class="form-control" />
+     <div *ngIf="eventForm.get('name')?.hasError('required') && eventForm.get('name')?.touched">
+       <small class="text-danger">Ürituse nimi on kohustuslik väli</small>
+     </div>
+   </div>
+   <h5 style="margin-left:18px;">Sisesta toimumise kuupäev ja kellaaeg:</h5>
+   <div class="group">
+      <div class="form-group">
+        <label for="date">Kuupäev:</label>
+        <input style="margin-bottom: 10px;" type="date" id="date" formControlName="date" class="form-control" />
+        <label for="time">Kell:</label>
+        <input type="time" id="time" formControlName="time" class="form-control" />
+        <div *ngIf="eventForm.get('date')?.hasError('required') && eventForm.get('date')?.touched">
+          <small class="text-danger">Toimumise kuupäev on kohustuslik väli</small>
+        </div>
+        <div *ngIf="eventForm.get('time')?.hasError('required') && eventForm.get('time')?.touched">
+          <small class="text-danger">Toimumise kellaaeg on kohustuslik väli</small>
+        </div>
+        <div *ngIf="eventForm.get('date')?.hasError('futureDate') && eventForm.get('date')?.touched">
+          <small class="text-danger">Sisestamise kuupäev peab olema tulevikus</small>
+        </div>
+      </div>
+    </div>
+   <h5 style="margin-left:18px;">Sisesta asukoht:</h5>
+   <div class="group">
+   <div class="form-group">
+     <label for="street">Tänav:</label>
+     <input type="text" id="street" formControlName="street" class="form-control" />
+     <div *ngIf="eventForm.get('street')?.hasError('required') && eventForm.get('street')?.touched">
+       <small class="text-danger">Tänav tuleb märkida</small>
+     </div>
+     <label for="city">city:</label>
+     <input type="text" id="city" formControlName="city" class="form-control" />
+     <div *ngIf="eventForm.get('city')?.hasError('required') && eventForm.get('city')?.touched">
+       <small class="text-danger">Linn tuleb märkida</small>
+     </div>
+     <label for="state">Maakond:</label>
+     <input type="text" id="state" formControlName="state" class="form-control" />
+     <div *ngIf="eventForm.get('state')?.hasError('required') && eventForm.get('state')?.touched">
+       <small class="text-danger">Maakond tuleb märkida</small>
+     </div>
+     <label for="zipCode">Postiindex:</label>
+     <input type="text" id="zipCode" formControlName="zipCode" class="form-control" />
+     <div *ngIf="(eventForm.get('zipCode')?.hasError('required') || eventForm.get('zipCode')?.hasError('pattern')) && eventForm.get('zipCode')?.touched">
+       <small class="text-danger">postiindeks tuleb märkida ja see peab olema number</small>
+     </div>
+   </div>
+</div>
+
+
+   <div class="form-group">
+     <label for="additionalInfo">Lisainfo:</label>
+     <textarea id="additionalInfo" formControlName="additionalInfo" class="form-control"></textarea>
+     <div *ngIf="eventForm.get('additionalInfo')?.hasError('maxLength') && eventForm.get('additionalInfo')?.touched">
+       <small class="text-danger">Lisainfo ei tohi ületada 1000 tähemärki</small>
+     </div>
+   </div>
+   <div *ngIf="errorMessage" class="text-center">
+    <small  class="text-danger  fs-5">{{errorMessage}}</small>
+  </div>
+   <button type="submit" class="btn btn-primary mt-4">Salvesta Üritus</button>
+   
+   <button routerLink="/" class="btn btn-primary  mt-4 tagasi " type="button">Tagasi avalehele</button>
+      
+   
+ </form>
+

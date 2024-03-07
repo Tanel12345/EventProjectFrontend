@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router, RouterModule } from '@angular/router';
-import { EventService } from 'src/app/services/eventservice/event.service';
+import { ApiResponse, EventService } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
 
 @Component({
@@ -15,14 +17,17 @@ export class HomeComponent {
   headerInfo: any = {pageName: "AVALEHT",
   additionalInfo: "Kõik registreeritud üritused"}
 
-  constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router, private sharedService: SharedService){}
+  constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router, private sharedService: SharedService, private datePipe: DatePipe){
+    this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss');}
   allEvents: any;
   errorMessage: any
+  currentDate: string|null;
   
   ngOnInit(): void {
     this.getEvents();
     this.sharedService.events$.subscribe((events) => {this.allEvents = events;})
     this.sharedService.addHeaderInfo(this.headerInfo)
+   
   }
 
   
@@ -34,6 +39,7 @@ export class HomeComponent {
         console.log('Product Fields:', this.allEvents);
 
         console.log("cccc"+this.allEvents[0]);
+        
       },
       error: (error) => {
         console.error('Ei saanud üritusi:', error);
@@ -45,7 +51,7 @@ export class HomeComponent {
 
     
   addNewEvent() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/addEvent']);
     }
 
 
@@ -57,8 +63,38 @@ export class HomeComponent {
   }
 
 
-  deleteEvent() {
-    throw new Error('Method not implemented.');
+  deleteEvent(eventId: number) {
+
+
+    this.eventService.deleteEvent("http://localhost:8080/api/events/deleteEventById/"+eventId).subscribe(
+      (response: ApiResponse) => {
+        // Handle successful response
+        console.log('Response:', response);
+        window.location.reload();
+      },
+      (error) => {
+        // Handli error
+        console.error('Error:', error);
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 0) {
+            // Server is not reachable or closed
+            console.error('Server ei vasta või on suletud.');
+            this.errorMessage = "Server ei vasta või on suletud.";
+          } else {
+            // Http errorid
+            console.error('HTTP error status:', error.status);
+            this.errorMessage = error.message;
+          }
+        } else {
+          //Mitte http errorid
+          console.error('Non-HTTP error:', error.message);
+          this.errorMessage = error.message;
+        }
+      }
+        
+      
+    );
+    
     }
 
 
