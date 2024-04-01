@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse, EventService } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
+import { environment } from 'src/environments/environment.prod';
+
+
+
 
 @Component({
   selector: 'app-event-attendees',
@@ -10,7 +14,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
 })
 export class EventAttendeesComponent {
 
-
+  apiUrl = environment.apiUrl;
 
   headerInfo: any = {pageName: "Osavõtjate vaade",
   additionalInfo: "Nii eraisikutest kui ettevõttetest osavõtjad"}
@@ -45,7 +49,7 @@ export class EventAttendeesComponent {
 
     //Kustutab sellelt ürituselt sisestatud id ga eraisikust osaleja ja uuendab state sharedservises
   deleteIndividualAttendee(attendeeId: number) {
-    this.eventService.deleteIndividualAttendee("http://localhost:8080/api/events/events/"+this.eventId+"/individualAttendees/"+ attendeeId).subscribe({
+    this.eventService.deleteIndividualAttendee(this.apiUrl+"/api/events/events/"+this.eventId+"/individualAttendees/"+ attendeeId).subscribe({
       next: (data: ApiResponse) => {
         console.log('osaleja kustutati(frontend) '+data.message+' (backend)');
        
@@ -63,7 +67,7 @@ export class EventAttendeesComponent {
 
   //Kustutab sellelt ürituselt sisestatud id ga ettevõttest osaleja ja uuendab state sharedservises
   deleteLegalAttendee(attendeeId: number) {
-    this.eventService.deleteLegalAttendee("http://localhost:8080/api/events/events/"+this.eventId+"/legalAttendees/"+ attendeeId).subscribe({
+    this.eventService.deleteLegalAttendee(this.apiUrl+"/api/events/events/"+this.eventId+"/legalAttendees/"+ attendeeId).subscribe({
       next: (data: ApiResponse) => {
         console.log('osaleja kustutati (frontend) '+data.message+' (backend)');
        
@@ -82,7 +86,7 @@ export class EventAttendeesComponent {
     //Tirib ürituse detailid koos osalejatega
     getEventDetails() {
 
-    this.eventService.getEvent("http://localhost:8080/api/events/getEventDetailsWithAttendeesById/"+this.eventId).subscribe({
+    this.eventService.getEvent(this.apiUrl+"/api/events/getEventDetailsWithAttendeesById/"+this.eventId).subscribe({
       next: (data) => {
       
         this.sharedService.addEvent(data)

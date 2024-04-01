@@ -14,6 +14,8 @@ import {
   LegalAttendees,
 } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
+import { environment } from 'src/environments/environment.prod';
+
 
 @Component({
   selector: 'app-add-attendee',
@@ -21,6 +23,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
   styleUrls: ['./add-attendee.component.css'],
 })
 export class AddAttendeeComponent {
+  apiUrl = environment.apiUrl;
   headerInfo: any = {
     pageName: 'Osavõtjate lisamise vaade',
     additionalInfo: 'Lisa nii eraisikutest kui ettevõttetest osavõtjaid',
@@ -89,7 +92,7 @@ export class AddAttendeeComponent {
 
       this.eventService
         .addIndividualAttendee(
-          'http://localhost:8080/api/events/addIndividualAttendeeToEventId/' +
+          this.apiUrl+'/api/events/addIndividualAttendeeToEventId/' +
             this.eventId,
           individualFormData
         )
@@ -97,7 +100,7 @@ export class AddAttendeeComponent {
           (response: IndividualAttendees) => {
             // Handle successful response
             console.log('Response:', response);
-            this.router.navigate(['/main']);
+            this.router.navigate(['/']);
           },
           (error) => {
             // Handli error
@@ -129,7 +132,7 @@ export class AddAttendeeComponent {
 
       this.eventService
         .addLegalAttendee(
-          'http://localhost:8080/api/events/addLegalAttendeeToEventId/' +
+          this.apiUrl+'/api/events/addLegalAttendeeToEventId/' +
             this.eventId,
           legalFormData
         )
@@ -137,7 +140,7 @@ export class AddAttendeeComponent {
           (response: LegalAttendees) => {
             // Handle successful response
             console.log('Response:', response);
-            this.router.navigate(['/main']);
+            this.router.navigate(['/']);
           },
           (error) => {
             // Handli error

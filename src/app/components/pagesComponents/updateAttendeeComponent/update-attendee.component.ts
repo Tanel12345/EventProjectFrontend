@@ -5,14 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ApiResponse, EventService } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
-
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-update-attendee',
   templateUrl: './update-attendee.component.html',
   styleUrls: ['./update-attendee.component.css']
 })
 export class UpdateAttendeeComponent {
-
+  apiUrl = environment.apiUrl;
 
   headerInfo: any = {
     pageName: 'Osavõtja andmete uuendamise vaade',
@@ -141,7 +141,7 @@ export class UpdateAttendeeComponent {
 
       this.eventService
         .updateIndividualAttendeeFromEvent(
-          'http://localhost:8080/api/events/events/'+this.eventId+'/individualAttendees/'+this.individualAttendeeId,
+          this.apiUrl+'/api/events/events/'+this.eventId+'/individualAttendees/'+this.individualAttendeeId,
            individualFormData
          
         )
@@ -183,7 +183,7 @@ export class UpdateAttendeeComponent {
       
       this.eventService
         .updateLegalAttendeeFromEvent(
-          'http://localhost:8080/api/events/events/'+this.eventId+'/legalAttendees/'+this.legalAttendeeId,
+          this.apiUrl+'/api/events/events/'+this.eventId+'/legalAttendees/'+this.legalAttendeeId,
            legalFormData
          
         )

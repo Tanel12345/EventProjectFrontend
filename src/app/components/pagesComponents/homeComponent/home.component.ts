@@ -4,6 +4,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router, RouterModule } from '@angular/router';
 import { ApiResponse, EventService } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
+import { environment } from 'src/environments/environment.prod';
+
+
 
 @Component({
   selector: 'app-home',
@@ -13,7 +16,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
 
 export class HomeComponent {
 
-  
+  apiUrl = environment.apiUrl;
   headerInfo: any = {pageName: "AVALEHT",
   additionalInfo: "Kõik registreeritud üritused"}
 
@@ -32,7 +35,7 @@ export class HomeComponent {
 
   
   getEvents(): void {
-    this.eventService.getEvents("http://localhost:8080/api/events/getAllEvents").subscribe({
+    this.eventService.getEvents("https://ec2-54-93-191-154.eu-central-1.compute.amazonaws.com/api/events/getAllEvents").subscribe({
       next: (data) => {
       
         this.sharedService.addEvents(data)
@@ -66,7 +69,7 @@ export class HomeComponent {
   deleteEvent(eventId: number) {
 
 
-    this.eventService.deleteEvent("http://localhost:8080/api/events/deleteEventById/"+eventId).subscribe(
+    this.eventService.deleteEvent(this.apiUrl+"/api/events/deleteEventById/"+eventId).subscribe(
       (response: ApiResponse) => {
         // Handle successful response
         console.log('Response:', response);

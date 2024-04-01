@@ -8,7 +8,7 @@ import { EventAttendeesComponent } from './components/pagesComponents/eventAtten
 import { NotFoundComponentComponent } from './components/exception/not-found-component/not-found-component.component';
 
 const routes: Routes = [
-  {path: 'main', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'addEvent', component: AddEventComponent},
   {path: 'addAttendee', component: AddAttendeeComponent},
   {path: 'updateAttendee', component: UpdateAttendeeComponent},
@@ -16,7 +16,7 @@ const routes: Routes = [
 
 
   {path: '404', component: NotFoundComponentComponent},
-  { path: '',   redirectTo: 'main', pathMatch: 'full' },
+  
   {path: '**', redirectTo: '404'}
   
 ];

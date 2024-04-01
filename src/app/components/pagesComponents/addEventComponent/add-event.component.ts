@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse, EventService } from 'src/app/services/eventservice/event.service';
 import { SharedService } from 'src/app/services/sharedService/shared.service';
+import { environment } from 'src/environments/environment.prod';
+
 
 @Component({
   selector: 'app-add-event',
@@ -11,7 +13,7 @@ import { SharedService } from 'src/app/services/sharedService/shared.service';
 })
 export class AddEventComponent {
 
-  
+  apiUrl = environment.apiUrl;
   headerInfo: any = {
     pageName: 'Ürituse lisamise vaade',
     additionalInfo: 'Lisa tulevaid üritusi',
@@ -74,13 +76,13 @@ export class AddEventComponent {
 
       this.eventService
         .createEventWithoutAttendees(
-          'http://localhost:8080/api/events/createEventWithoutAttendees' ,eventFormData
+          this.apiUrl+'/api/events/createEventWithoutAttendees' ,eventFormData
         )
         .subscribe(
           (response: ApiResponse) => {
             // Handle successful response
             console.log('Response:', response);
-            this.router.navigate(['/main']);
+            this.router.navigate(['/']);
           },
           (error) => {
             // Handli error
